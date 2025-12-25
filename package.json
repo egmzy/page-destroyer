@@ -1,0 +1,25 @@
+{
+    "name": "page-destroyer",
+    "version": "1.1.0",
+    "description": "A Chrome extension that turns any webpage into a destructible playground with weapons, sound effects, and satisfying animations.",
+    "author": "Page Destroyer Contributors",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-username/page-destroyer"
+    },
+    "keywords": [
+        "chrome-extension",
+        "browser-extension",
+        "destruction",
+        "stress-relief",
+        "web-audio",
+        "animations"
+    ],
+    "scripts": {
+        "icons": "open tools/generate-icons.html"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    }
+}

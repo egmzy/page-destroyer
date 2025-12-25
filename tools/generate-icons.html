@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Page Destroyer Icon Generator</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 40px;
+      background: #18181b;
+      font-family: system-ui;
+      color: white;
+    }
+
+    h1 {
+      color: #ff6b00;
+      margin: 0;
+    }
+
+    .icons {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .icon-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    canvas {
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #ff6b00;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff8533;
+    }
+
+    span {
+      color: #666;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>☄️ Page Destroyer Icon</h1>
+  <div class="icons">
+    <div class="icon-box"><canvas id="icon128" width="128" height="128"></canvas><span>128px</span></div>
+    <div class="icon-box"><canvas id="icon48" width="48" height="48"></canvas><span>48px</span></div>
+    <div class="icon-box"><canvas id="icon32" width="32" height="32"></canvas><span>32px</span></div>
+    <div class="icon-box"><canvas id="icon16" width="16" height="16"></canvas><span>16px</span></div>
+  </div>
+  <button onclick="downloadAll()">Download All Icons</button>
+  <script>
+    function drawIcon(canvas) {
+      const ctx = canvas.getContext('2d');
+      const s = canvas.width;
+      const c = s / 2;
+
+      ctx.clearRect(0, 0, s, s);
+
+      // Meteor trail
+      ctx.save();
+      ctx.translate(c * 0.9, c * 0.9);
+      ctx.rotate(-0.7);
+
+      const trail = ctx.createLinearGradient(-s * 0.5, 0, s * 0.1, 0);
+      trail.addColorStop(0, 'transparent');
+      trail.addColorStop(0.4, 'rgba(255,120,0,0.4)');
+      trail.addColorStop(0.7, 'rgba(255,180,50,0.7)');
+      trail.addColorStop(1, 'rgba(255,220,100,0.9)');
+
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.55, 0);
+      ctx.quadraticCurveTo(-s * 0.25, -s * 0.15, s * 0.08, -s * 0.02);
+      ctx.quadraticCurveTo(-s * 0.25, s * 0.15, -s * 0.55, 0);
+      ctx.fillStyle = trail;
+      ctx.fill();
+
+      ctx.restore();
+
+      // Glow
+      const glow = ctx.createRadialGradient(c * 0.85, c * 0.85, 0, c * 0.85, c * 0.85, s * 0.45);
+      glow.addColorStop(0, 'rgba(255,200,100,0.5)');
+      glow.addColorStop(0.4, 'rgba(255,100,0,0.2)');
+      glow.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(c * 0.85, c * 0.85, s * 0.45, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      // Meteor body
+      const r = s * 0.32;
+      const meteor = ctx.createRadialGradient(c * 0.78, c * 0.72, r * 0.15, c * 0.85, c * 0.85, r);
+      meteor.addColorStop(0, '#fffef0');
+      meteor.addColorStop(0.15, '#ffe066');
+      meteor.addColorStop(0.4, '#ff8800');
+      meteor.addColorStop(0.7, '#dd4400');
+      meteor.addColorStop(1, '#882200');
+
+      ctx.beginPath();
+      ctx.arc(c * 0.85, c * 0.85, r, 0, Math.PI * 2);
+      ctx.fillStyle = meteor;
+      ctx.fill();
+
+      // Highlight
+      ctx.beginPath();
+      ctx.arc(c * 0.7, c * 0.65, r * 0.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.fill();
+    }
+
+    ['icon128', 'icon48', 'icon32', 'icon16'].forEach(id => drawIcon(document.getElementById(id)));
+
+    function downloadAll() {
+      ['icon128', 'icon48', 'icon32', 'icon16'].forEach((id, i) => {
+        setTimeout(() => {
+          const link = document.createElement('a');
+          link.download = id + '.png';
+          link.href = document.getElementById(id).toDataURL('image/png');
+          link.click();
+        }, i * 150);
+      });
+    }
+  </script>
+</body>
+
+</html>
